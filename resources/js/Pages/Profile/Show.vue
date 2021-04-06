@@ -14,6 +14,14 @@
                     <jet-section-border />
                 </div>
 
+                <counter>
+                    <template #counter>
+                        Coollllll
+                    </template>
+                </counter>
+
+                <jet-section-border />
+
                 <div v-if="$page.props.jetstream.canUpdatePassword">
                     <update-password-form class="mt-10 sm:mt-0" />
 
@@ -47,6 +55,8 @@
     import UpdatePasswordForm from './UpdatePasswordForm'
     import UpdateProfileInformationForm from './UpdateProfileInformationForm'
 
+    import Counter from '@/Jetstream/Counter'
+
     export default {
         props: ['sessions'],
 
@@ -58,6 +68,8 @@
             TwoFactorAuthenticationForm,
             UpdatePasswordForm,
             UpdateProfileInformationForm,
+
+            Counter,
         },
     }
 </script>
