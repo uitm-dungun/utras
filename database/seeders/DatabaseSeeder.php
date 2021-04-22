@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             DriverSeeder::class,
             VehicleSeeder::class,
-            MaintenanceSeeder::class,
+            // MaintenanceSeeder::class,
             ActionHistorySeeder::class,
         ]);
     }

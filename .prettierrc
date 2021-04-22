@@ -1,0 +1,10 @@
+{
+  "htmlWhitespaceSensitivity": "ignore",
+  "singleQuote": true,
+  "semi": false,
+  "tabWidth": 4,
+  "bracketSpacing": true,
+  "printWidth": 1000,
+  "proseWrap": "never",
+  "vueIndentScriptAndStyle": true
+}

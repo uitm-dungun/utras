@@ -22,11 +22,16 @@ class MaintenanceFactory extends Factory
     public function definition()
     {
         return [
+            'title' => $this->faker->sentence,
             'bill_total' => rand(50,50000),
-            'location' => $this->faker->address,
-            'invoice_image_path' => null,
+
             'description' => $this->faker->realText(),
-            'date' => $this->faker->dateTime,
+            'location' => $this->faker->address,
+            'vendor' => $this->faker->company,
+
+            'invoice_image_path' => null,
+
+            'date' => $this->faker->dateTime(),
         ];
     }
 }

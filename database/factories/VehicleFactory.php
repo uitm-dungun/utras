@@ -24,9 +24,9 @@ class VehicleFactory extends Factory
         // \Bezhanov\Faker\ProviderCollectionHelper::addAllProvidersTo($this->faker);
 
         return [
-            'plate_number' => rand(0,9000),
+            'plate_number' =>  range('A','Z')[rand(0,count(range('A','Z'))-1)] . range('A','Z')[rand(0,count(range('A','Z'))-1)] . range('A','Z')[rand(0,count(range('A','Z'))-1)] . rand(1000,9000),
             'type' => ['car','bus','truck'][rand(0,2)],
-            'located_at_campus_code' => $this->faker->address,
+            'located_at_campus_code' => ['dgn','kt','bb'][rand(0,2)],
             'is_available' => [true, false][rand(0,1)],
             'grant_image_path' => null,
             'puspakom_expiry' => $this->faker->dateTime,
