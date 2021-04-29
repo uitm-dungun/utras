@@ -9,6 +9,10 @@ class Vehicle extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'is_available' => 'boolean',
+    ];
+
     protected $appends = ['located_at_campus_name'];
 
     public function maintenances() {

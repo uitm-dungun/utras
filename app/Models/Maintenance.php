@@ -10,6 +10,10 @@ class Maintenance extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'is_paid' => 'boolean',
+    ];
+
     public function vehicle() {
         return $this->belongsTo(Vehicle::class);
     }

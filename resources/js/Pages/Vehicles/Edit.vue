@@ -6,46 +6,84 @@
         </template>
         <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Modify Information</h4>
         <div class="grid gap-6 mb-8 md:grid-cols-3">
-            <div class="col-span-2 px-4 py-3 mb-4 bg-white rounded-lg shadow-xs dark:bg-gray-800" style="height: max-content">
-                <div class="block text-sm">
-                    <jet-label for="plate_number" value="Plate Number" />
-                    <jet-input id="plate_number" type="text" v-model="form.plate_number" :placeholder="vehicle.plate_number" required />
+            <div class="col-span-2">
+                <div class="px-4 py-3 mb-4 bg-white rounded-lg shadow-xs dark:bg-gray-800" style="height: max-content">
+                    <div class="block text-sm">
+                        <jet-label for="plate_number" value="Plate Number" />
+                        <jet-input id="plate_number" type="text" v-model="form.plate_number" :placeholder="vehicle.plate_number" required />
+                    </div>
+
+                    <div class="block text-sm mt-4">
+                        <jet-label for="type" value="Type" />
+                        <jet-select id="type" v-model="form.type" required>
+                            <option disabled value="">Please select one</option>
+                            <option v-for="vehicleType in ['Bus', 'Car', 'Lorry', 'Truck']" v-bind:key="vehicleType" :value="vehicleType">{{ vehicleType }}</option>
+                        </jet-select>
+                    </div>
+
+                    <div class="block text-sm mt-4">
+                        <jet-label for="type" value="Location" />
+                        <jet-select id="type" v-model="form.located_at_campus_code" required>
+                            <option disabled value="">Please select one</option>
+                            <option v-for="campus in campuses" v-bind:key="campus.code" :value="campus.code">{{ campus.name }}</option>
+                        </jet-select>
+                    </div>
+
+                    <div class="block text-sm mt-4">
+                        <jet-label for="availablity" value="Availablity" />
+                        <jet-radio id="availablity" v-model="form.is_available" required>
+                            <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                                <input name="is_available" value="true" type="radio" :checked="form.is_available" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" />
+                                <span class="ml-2">Available</span>
+                            </label>
+                            <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
+                                <input name="is_available" value="false" type="radio" :checked="!form.is_available" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" />
+                                <span class="ml-2">Unavailable</span>
+                            </label>
+                        </jet-radio>
+                    </div>
+
+                    <div class="block mt-4">
+                        <button class="w-full px-5 py-3 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">Save Changes</button>
+                    </div>
                 </div>
 
-                <div class="block text-sm mt-4">
-                    <jet-label for="type" value="Type" />
-                    <jet-select id="type" v-model="form.type" required>
-                        <option disabled value="">Please select one</option>
-                        <option v-for="vehicleType in ['Bus', 'Car', 'Lorry', 'Truck']" v-bind:key="vehicleType" :value="vehicleType">{{ vehicleType }}</option>
-                    </jet-select>
-                </div>
-
-                <div class="block text-sm mt-4">
-                    <jet-label for="type" value="Location" />
-                    <jet-select id="type" v-model="form.located_at_campus_code" required>
-                        <option disabled value="">Please select one</option>
-                        <option v-for="campus in campuses" v-bind:key="campus.code" :value="campus.code">{{ campus.name }}</option>
-                    </jet-select>
-                </div>
-
-                <div class="block text-sm mt-4">
-                    <jet-label for="availablity" value="Availablity" />
-                    <jet-radio id="availablity" v-model="form.is_available" required>
-                        <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                            <input name="is_available" value="true" type="radio" :checked="form.is_available" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" />
-                            <span class="ml-2">Available</span>
-                        </label>
-                        <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
-                            <input name="is_available" value="false" type="radio" :checked="!form.is_available" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" />
-                            <span class="ml-2">Unavailable</span>
-                        </label>
-                    </jet-radio>
-                </div>
-
-                <div class="block mt-4">
-                    <button class="w-full px-5 py-3 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">Save Changes</button>
+                <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Recent Maintenances</h4>
+                <div class="w-full overflow-hidden rounded-lg shadow-xs mb-8">
+                    <div class="w-full overflow-x-auto">
+                        <jet-table>
+                            <jet-table-head>
+                                <th class="px-4 py-3">Title</th>
+                                <th class="px-4 py-3">Date</th>
+                                <th class="px-4 py-3">Paym</th>
+                            </jet-table-head>
+                            <jet-table-body>
+                                <jet-table-row v-for="maintenance in maintenances.data" v-bind="maintenance" v-bind:key="maintenance.id">
+                                    <jet-table-data>
+                                        <div class="flex items-center text-sm">
+                                            <!-- Avatar with inset shadow -->
+                                            <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                                <img class="object-cover w-full h-full rounded-full" src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ" alt="" loading="lazy" />
+                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold">Hans Burger</p>
+                                                <p class="text-xs text-gray-600 dark:text-gray-400">10x Developer</p>
+                                            </div>
+                                        </div>
+                                    </jet-table-data>
+                                    <jet-table-data class="text-sm">$ 863.45</jet-table-data>
+                                    <jet-table-data class="text-xs">
+                                        <span :class="{ 'text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100': maintenance.is_paid, 'text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700': !maintenance.is_paid }" class="px-2 py-1 font-semibold leading-tight rounded-full">{{ maintenance.is_paid ? 'Paid' : 'Pending' }}</span>
+                                    </jet-table-data>
+                                    <jet-table-data class="text-sm">6/10/2020</jet-table-data>
+                                </jet-table-row>
+                            </jet-table-body>
+                        </jet-table>
+                    </div>
                 </div>
             </div>
+
             <div class="grid grid-cols-1">
                 <div class="px-4 py-3 mb-6 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                     <div class="block text-sm">
@@ -141,7 +179,11 @@ import JetLabel from '@/Jetstream/Label'
 import JetInput from '@/Jetstream/Input'
 import JetSelect from '@/Jetstream/Select'
 import JetRadio from '@/Jetstream/Radio'
-// import JetDatePicker from '@/Jetstream/DatePicker'
+import JetTable from '@/Jetstream/Table'
+import JetTableHead from '@/Jetstream/TableHead'
+import JetTableBody from '@/Jetstream/TableBody'
+import JetTableRow from '@/Jetstream/TableRow'
+import JetTableData from '@/Jetstream/TableData'
 
 export default {
     props: ['vehicle', 'dark', 'canResetPassword', 'status'],
@@ -152,7 +194,11 @@ export default {
         JetInput,
         JetSelect,
         JetRadio,
-        // JetDatePicker,
+        JetTable,
+        JetTableHead,
+        JetTableBody,
+        JetTableRow,
+        JetTableData,
     },
 
     data() {

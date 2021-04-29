@@ -28,7 +28,7 @@ class CreateMaintenancesTable extends Migration
 
             // Payments
             $table->text('invoice_image_path')->nullable();
-            $table->boolean('payment_is_confirmed')->default(false);
+            $table->boolean('is_paid')->default(false);
 
             $table->timestamp('date')->useCurrent();
             $table->foreignIdFor(Vehicle::class);
